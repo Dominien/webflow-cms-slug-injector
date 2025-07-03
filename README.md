@@ -30,3 +30,38 @@ This script solves that problem. It automatically detects the page slug from the
     * **Value:** `blog-slug`
 
 That's it! The script will now automatically append `&utm_term=[your-post-slug]` to that link's URL. You can still add any other static UTMs (`utm_source`, `utm_campaign`, etc.) directly in the Webflow link settings.
+
+---
+
+## Deutsch 🇩🇪
+
+Ein leichtes Skript ohne Abhängigkeiten, das dynamisch den Slug der aktuellen Webflow CMS-Seite als `utm_term`-Parameter zu Links hinzufügt. Dies ermöglicht ein präzises Tracking, welche Blog-Posts oder CMS-Elemente zu Conversions führen.
+
+***
+
+### Das Problem
+
+In Webflow ist es nicht möglich, den Slug einer CMS-Seite dynamisch in einem Link auf derselben Template-Seite zu verwenden. Dadurch kann man nicht genau nachvollziehen, von welchem Blog-Post aus ein Nutzer auf den "Kontakt"-Button geklickt hat, da der `utm_term` für alle Posts identisch sein müsste.
+
+### Die Lösung 💡
+
+Dieses Skript löst genau dieses Problem. Es erkennt automatisch den Seiten-Slug aus der URL und fügt ihn als `utm_term` in jeden von Ihnen bestimmten Link ein. Das Skript kann gefahrlos auf der gesamten Website installiert werden, da es nur auf Seiten unter dem Pfad `/blog/` aktiv wird.
+
+***
+
+### Anwendung
+
+1.  **Skript installieren**
+    Fügen Sie das Skript zu Ihrem Webflow-Projekt hinzu, indem Sie die folgende Zeile in die **Projekteinstellungen** > **Eigener Code** > **Footer-Code** einfügen.
+
+    ```html
+    <script defer src="[https://webflow-cms-slug-injector.vercel.app/dynamic-utm.js](https://webflow-cms-slug-injector.vercel.app/dynamic-utm.js)"></script>
+    ```
+
+2.  **Attribut hinzufügen**
+    Wählen Sie auf Ihrer Blog-Post-Template-Seite einen Link aus, den Sie tracken möchten. Gehen Sie zum **Einstellungs-Panel des Elements (⚙️)** und fügen Sie dieses benutzerdefinierte Attribut hinzu:
+
+    * **Name:** `data-utm-term`
+    * **Wert:** `blog-slug`
+
+Das ist alles! Das Skript wird nun automatisch `&utm_term=[Ihr-Post-Slug]` an die URL des Links anhängen. Sie können weiterhin alle anderen statischen UTM-Parameter (`utm_source`, `utm_campaign` usw.) direkt in den Link-Einstellungen von Webflow festlegen.
