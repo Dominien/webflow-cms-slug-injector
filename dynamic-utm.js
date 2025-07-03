@@ -1,33 +1,27 @@
 // Wait for the page to load completely.
 document.addEventListener("DOMContentLoaded", function() {
 
-  // --- Step 1: Check if we are on a blog page and get the slug ---
-  const pathArray = window.location.pathname.split('/');
-  const blogIndex = pathArray.indexOf('blog');
-  let blogSlug = '';
+  // --- Step 1: Get the page slug from the last part of the URL ---
+  const pathParts = window.location.pathname.split('/').filter(part => part);
+  const slug = pathParts.length > 0 ? pathParts[pathParts.length - 1] : '';
 
-  // Find the slug that comes after "/blog/".
-  if (blogIndex !== -1 && pathArray.length > blogIndex + 1) {
-    blogSlug = pathArray[blogIndex + 1];
+  // If no slug is found in the URL (e.g., on the homepage), stop the script.
+  if (!slug) {
+    console.log("UTM Script: No slug found in URL. Script will not run.");
+    return;
   }
 
-  // If we are not on a blog post page (no slug), do nothing.
-  if (!blogSlug) {
-    console.log("Not a blog post page. UTM script will not run.");
-    return; 
-  }
-
-  console.log(`Blog Post detected! Slug: "${blogSlug}"`);
+  console.log(`UTM Script: Detected slug "${slug}"`);
 
   // --- Step 2: Find all links that need the dynamic slug ---
   const linksToUpdate = document.querySelectorAll('a[data-utm-term="blog-slug"]');
   console.log(`Found ${linksToUpdate.length} links to update with the slug.`);
 
-  // --- Step 3: Add the blog slug as 'utm_term' to each link ---
+  // --- Step 3: Add the slug as 'utm_term' to each link ---
   linksToUpdate.forEach(link => {
     try {
       const url = new URL(link.href);
-      url.searchParams.set('utm_term', blogSlug);
+      url.searchParams.set('utm_term', slug);
       link.href = url.toString();
       console.log(`Updated link: ${link.href}`);
     } catch (error) {
